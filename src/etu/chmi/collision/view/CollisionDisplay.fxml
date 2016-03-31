@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="etu.chmi.collision.view.CollisionDisplayController">
+   <children>
+      <SplitPane dividerPositions="0.29797979797979796" layoutX="165.0" layoutY="53.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0">
+               <children>
+                  <Button layoutX="62.0" layoutY="352.0" mnemonicParsing="false" onAction="#handleStart" text="Start" />
+               </children></AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0">
+               <children>
+                  <Canvas fx:id="canvas" height="380.0" layoutX="97.0" layoutY="59.0" width="400.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

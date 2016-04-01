@@ -16,7 +16,8 @@
                </children></AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0">
                <children>
-                  <Canvas fx:id="canvas" height="380.0" layoutX="97.0" layoutY="59.0" width="400.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                  <Canvas fx:id="canvasTable" height="380.0" layoutX="97.0" layoutY="59.0" width="400.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                  <Canvas fx:id="canvasBalls" height="380.0" layoutX="97.0" layoutY="59.0" width="400.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
                </children>
             </AnchorPane>
         </items>

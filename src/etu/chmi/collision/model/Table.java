@@ -22,25 +22,8 @@ public class Table {
 	 /**
      * Default constructor
      */
-	 public Table() {		 
-		 this.width = 360.0;
-		 this.height = 340.0;
-		 this.sideSize = 20.0;
-		 
-		 this.xTop = this.sideSize;
-		 this.yTop = this.sideSize;
-		 
-		 this.xTopSide = 0.0;
-		 this.yTopSide = 0.0;
-		 
-		 this.xBottomSide = this.xTopSide;
-		 this.yBottomSide = this.yTopSide+this.height+this.sideSize;
-		 
-		 this.xLeftSide = this.xTopSide;
-		 this.yLeftSide = this.yTopSide;
-		 
-		 this.xRightSide = this.xTopSide+this.width+this.sideSize;
-		 this.yRightSide = this.yTopSide; 
+	 public Table() {	
+		 this(0.0, 0.0, 360.0, 340.0, 20.0);
 	}
 	 
 	 /**

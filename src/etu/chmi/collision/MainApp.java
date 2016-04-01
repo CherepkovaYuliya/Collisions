@@ -1,7 +1,9 @@
 package etu.chmi.collision;
 
 import java.io.IOException;
+import java.util.LinkedList;
 
+import etu.chmi.collision.model.Ball;
 import etu.chmi.collision.model.Table;
 import etu.chmi.collision.view.CollisionDisplayController;
 import javafx.application.Application;
@@ -16,12 +18,18 @@ public class MainApp extends Application {
     private AnchorPane rootLayout;
     
     private Table table; 
+    /**
+     * The data as an observable list of Balls.
+     */
+    private LinkedList<Ball> ballInfo;
         
     /**
      * Constructor
      */
     public MainApp() {
     	this.table = new Table();
+    	this.ballInfo = new LinkedList<Ball>();
+    	this.ballInfo.add(new Ball(150.0, 150.0, 17.0, 0.8,-1*Math.PI/2));
     }
 
     @Override
@@ -50,6 +58,7 @@ public class MainApp extends Application {
             // Give the controller access to the main app.
             CollisionDisplayController controller = loader.getController();
             controller.setMainApp(this);
+            controller.drawTable();
             
         } catch (IOException e) {
             e.printStackTrace();
@@ -70,5 +79,12 @@ public class MainApp extends Application {
     
     public Table getTable() {
         return this.table;
+    }
+    /**
+     * Returns the data as an observable list of Balls. 
+     * @return
+     */
+    public LinkedList<Ball> getBallInfo() {
+        return ballInfo;
     }
 }

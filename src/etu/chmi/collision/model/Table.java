@@ -34,11 +34,11 @@ public class Table {
 		 this.height = height;
 		 this.sideSize = sideSize;
 		 
-		 this.xTop = this.sideSize;
-		 this.yTop = this.sideSize;
-		 
 		 this.xTopSide = xTopSide;
 		 this.yTopSide = yTopSide;
+		 
+		 this.xTop = this.xTopSide+this.sideSize;
+		 this.yTop = this.yTopSide+this.sideSize;
 		 
 		 this.xBottomSide = this.xTopSide;
 		 this.yBottomSide = this.yTopSide+this.height+this.sideSize;

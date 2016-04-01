@@ -29,7 +29,7 @@ public class MainApp extends Application {
     public MainApp() {
     	this.table = new Table();
     	this.ballInfo = new LinkedList<Ball>();
-    	this.ballInfo.add(new Ball(150.0, 150.0, 17.0, 0.8,-1*Math.PI/2));
+    	this.ballInfo.add(new Ball(150.0, 150.0, 50.0, 0.8,-Math.PI/6));
     }
 
     @Override

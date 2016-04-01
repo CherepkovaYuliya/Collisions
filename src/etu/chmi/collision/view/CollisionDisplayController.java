@@ -21,18 +21,19 @@ public class CollisionDisplayController {
 
     // Reference to the main application.
     private MainApp mainApp;
-    // For movement.
+    
+    /*
+     * Vars for movement.
+     */
     long startNanoTime;
     private Movement mov;
-    boolean wasRef;
 
     /**
      * The constructor.
      * The constructor is called before the initialize() method.
      */
     public CollisionDisplayController() {
-    	mov = new Movement();
-    	wasRef = false;
+    	
     }
 
     /**
@@ -62,13 +63,9 @@ public class CollisionDisplayController {
      */
     @FXML
     private void handleStart() { 
+    	mov = new Movement();
     	startNanoTime = System.nanoTime();
-    	wasRef = false;
     	mov.start();  	
-    	
-    	
-    	
-    	
     }
     
     /*
@@ -128,22 +125,18 @@ public class CollisionDisplayController {
     			this.mainApp.getTable().getWidth(), this.mainApp.getTable().getHeight());
     }
 
-    
-    
-    
-    
+    /*
+     * Inner class.
+     */ 
     class Movement extends AnimationTimer {
     	  	
     	public void handle(long currentNanoTime)
         {
-    		
-    		
-    		
-            // Clears canvas.
+    		// Clears canvas.
         	gcBalls.clearRect(0, 0, canvasBalls.getWidth(), canvasBalls.getHeight());
            
-        	double t = (currentNanoTime - startNanoTime) / 10000000.0; 
-        	
+        	// Calculates curX, curY for balls.
+        	double t = (currentNanoTime - startNanoTime) / 10000000.0;         	
         	mainApp.getBallInfo().get(0).setCurX(
         			mainApp.getBallInfo().get(0).getX0() + 
         			mainApp.getBallInfo().get(0).getV()*t*Math.cos(mainApp.getBallInfo().get(0).getAngle()));
@@ -151,36 +144,43 @@ public class CollisionDisplayController {
         			mainApp.getBallInfo().get(0).getY0() + 
         			mainApp.getBallInfo().get(0).getV()*t*Math.sin(mainApp.getBallInfo().get(0).getAngle()));
         	
-        	System.out.println("x = "+mainApp.getBallInfo().get(0).getCurX());
-        	System.out.println("y = "+mainApp.getBallInfo().get(0).getCurY());
-        	System.out.println("angle = "+mainApp.getBallInfo().get(0).getAngle());
-        	System.out.println("cos = "+Math.cos(mainApp.getBallInfo().get(0).getAngle()));
-        	System.out.println("sin = "+Math.sin(mainApp.getBallInfo().get(0).getAngle()));
-        	System.out.println("t = "+t);
-        	
-        	/*if ((mainApp.getBallInfo().get(0).getCurY().compareTo(80.0) <= 0.0) && (!wasRef)) {
-        		System.out.println("fghjkl");
-        		
+        	// Checks collisions with right and left side. 
+        	if 
+        	(((mainApp.getBallInfo().get(0).getCurX()
+        			>= (mainApp.getTable().getxTop()+mainApp.getTable().getWidth()-mainApp.getBallInfo().get(0).getD()))) 
+        		|| (mainApp.getBallInfo().get(0).getCurX() 
+            			<= mainApp.getTable().getxTop()))
+        	{        		
         		mainApp.getBallInfo().get(0).setAngle(Math.PI-mainApp.getBallInfo().get(0).getAngle());
         		mainApp.getBallInfo().get(0).setX0(mainApp.getBallInfo().get(0).getCurX());
         		mainApp.getBallInfo().get(0).setY0(mainApp.getBallInfo().get(0).getCurY());
         		startNanoTime = System.nanoTime();
-        		wasRef = true;
         	} 
         	else {
-        		
-        	}*/
-        		// Draws the ball
-	        	gcBalls.setStroke(Color.SALMON);
-				gcBalls.setFill(Color.SALMON);
-	            gcBalls.strokeOval(mainApp.getBallInfo().get(0).getCurX(), 
-	            		mainApp.getBallInfo().get(0).getCurY(),
-	            		mainApp.getBallInfo().get(0).getRad(), 
-	            		mainApp.getBallInfo().get(0).getRad());
-	            gcBalls.fillOval(mainApp.getBallInfo().get(0).getCurX(), 
-	            		mainApp.getBallInfo().get(0).getCurY(),
-	            		mainApp.getBallInfo().get(0).getRad(), 
-	            		mainApp.getBallInfo().get(0).getRad());            
+        	// Checks collisions with top and bottom side. 
+        	if 
+        	((mainApp.getBallInfo().get(0).getCurY() 
+        			<= mainApp.getTable().getyTop()) 
+        			|| (mainApp.getBallInfo().get(0).getCurY() 
+                			>= (mainApp.getTable().getyTop()+mainApp.getTable().getHeight()-mainApp.getBallInfo().get(0).getD())))
+        	{  
+        		mainApp.getBallInfo().get(0).setAngle(Math.PI*2-mainApp.getBallInfo().get(0).getAngle());
+        		mainApp.getBallInfo().get(0).setX0(mainApp.getBallInfo().get(0).getCurX());
+        		mainApp.getBallInfo().get(0).setY0(mainApp.getBallInfo().get(0).getCurY());
+        		startNanoTime = System.nanoTime();
+        	}
+        	}
+        	// Draws the ball
+        	gcBalls.setStroke(Color.SALMON);
+			gcBalls.setFill(Color.SALMON);
+            gcBalls.strokeOval(mainApp.getBallInfo().get(0).getCurX(), 
+            		mainApp.getBallInfo().get(0).getCurY(),
+            		mainApp.getBallInfo().get(0).getD(), 
+            		mainApp.getBallInfo().get(0).getD());
+            gcBalls.fillOval(mainApp.getBallInfo().get(0).getCurX(), 
+            		mainApp.getBallInfo().get(0).getCurY(),
+            		mainApp.getBallInfo().get(0).getD(), 
+            		mainApp.getBallInfo().get(0).getD());  
         }
     }
 }

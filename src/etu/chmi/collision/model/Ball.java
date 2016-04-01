@@ -2,23 +2,24 @@ package etu.chmi.collision.model;
 
 public class Ball {
 	
+	// Coordinates of top left corner
 	private Double x0; 
 	private Double y0; 
 	private Double curX; 
 	private Double curY;
-	private final Double rad; 
+	private final Double d; 
 	private Double v; 
 	private Double angle;
 	
 	/**
      * Constructor
      */	
-	public Ball(Double x0, Double y0, Double rad, Double v, Double angle) {
+	public Ball(Double x0, Double y0, Double d, Double v, Double angle) {
 		this.x0 = new Double(x0);
 		this.y0 = new Double(y0);
 		this.curX = new Double(0.0);
 		this.curY = new Double(0.0);
-		this.rad = new Double(rad); 
+		this.d = new Double(d); 
 		this.v = new Double(v);
 		this.angle = new Double(angle);
 	}
@@ -55,8 +56,8 @@ public class Ball {
 		this.angle = angle;
 	}
 
-	public Double getRad() {
-		return rad;
+	public Double getD() {
+		return d;
 	}
 	
 	public Double getX0() {

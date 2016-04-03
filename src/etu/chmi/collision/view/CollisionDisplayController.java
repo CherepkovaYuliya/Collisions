@@ -129,48 +129,11 @@ public class CollisionDisplayController {
      * Inner class.
      */ 
     class Movement extends AnimationTimer {
-    	  	
-    	public void handle(long currentNanoTime)
-        {
-    		// Clears canvas.
-        	gcBalls.clearRect(0, 0, canvasBalls.getWidth(), canvasBalls.getHeight());
-           
-        	// Calculates curX, curY for balls.
-        	double t = (currentNanoTime - startNanoTime) / 10000000.0;         	
-        	mainApp.getBallInfo().get(0).setCurX(
-        			mainApp.getBallInfo().get(0).getX0() + 
-        			mainApp.getBallInfo().get(0).getV()*t*Math.cos(mainApp.getBallInfo().get(0).getAngle()));
-        	mainApp.getBallInfo().get(0).setCurY(
-        			mainApp.getBallInfo().get(0).getY0() + 
-        			mainApp.getBallInfo().get(0).getV()*t*Math.sin(mainApp.getBallInfo().get(0).getAngle()));
-        	
-        	// Checks collisions with right and left side. 
-        	if 
-        	(((mainApp.getBallInfo().get(0).getCurX()
-        			>= (mainApp.getTable().getxTop()+mainApp.getTable().getWidth()-mainApp.getBallInfo().get(0).getD()))) 
-        		|| (mainApp.getBallInfo().get(0).getCurX() 
-            			<= mainApp.getTable().getxTop()))
-        	{        		
-        		mainApp.getBallInfo().get(0).setAngle(Math.PI-mainApp.getBallInfo().get(0).getAngle());
-        		mainApp.getBallInfo().get(0).setX0(mainApp.getBallInfo().get(0).getCurX());
-        		mainApp.getBallInfo().get(0).setY0(mainApp.getBallInfo().get(0).getCurY());
-        		startNanoTime = System.nanoTime();
-        	} 
-        	else {
-        	// Checks collisions with top and bottom side. 
-        	if 
-        	((mainApp.getBallInfo().get(0).getCurY() 
-        			<= mainApp.getTable().getyTop()) 
-        			|| (mainApp.getBallInfo().get(0).getCurY() 
-                			>= (mainApp.getTable().getyTop()+mainApp.getTable().getHeight()-mainApp.getBallInfo().get(0).getD())))
-        	{  
-        		mainApp.getBallInfo().get(0).setAngle(Math.PI*2-mainApp.getBallInfo().get(0).getAngle());
-        		mainApp.getBallInfo().get(0).setX0(mainApp.getBallInfo().get(0).getCurX());
-        		mainApp.getBallInfo().get(0).setY0(mainApp.getBallInfo().get(0).getCurY());
-        		startNanoTime = System.nanoTime();
-        	}
-        	}
-        	// Draws the ball
+    	
+    	/*
+         * Draws ball.
+    	 */
+    	private void drawBall() {
         	gcBalls.setStroke(Color.SALMON);
 			gcBalls.setFill(Color.SALMON);
             gcBalls.strokeOval(mainApp.getBallInfo().get(0).getCurX(), 
@@ -181,6 +144,59 @@ public class CollisionDisplayController {
             		mainApp.getBallInfo().get(0).getCurY(),
             		mainApp.getBallInfo().get(0).getD(), 
             		mainApp.getBallInfo().get(0).getD());  
+    	}
+    	
+    	/*
+    	 * Calculates track.
+    	 */
+    	private void calculateTrack(long currentNanoTime) {
+    		// Calculates x, y for balls.
+        	double t = (currentNanoTime - startNanoTime) / 100000.0;       
+        	double x = mainApp.getBallInfo().get(0).getX0() + 
+        			   mainApp.getBallInfo().get(0).getV()*t*Math.cos(mainApp.getBallInfo().get(0).getAngle());
+        	double y = mainApp.getBallInfo().get(0).getY0() + 
+        			   mainApp.getBallInfo().get(0).getV()*t*Math.sin(mainApp.getBallInfo().get(0).getAngle());
+        	
+        	
+        	// Checks collisions with right and left side. 
+        	if (((x >= (mainApp.getTable().getxTop()+mainApp.getTable().getWidth()-mainApp.getBallInfo().get(0).getD()))) 
+        	       || (x <= mainApp.getTable().getxTop()))
+        	{ 
+        		// Changes angle, changes x0, y0. Doesn't change curX and curY!!! 
+        		mainApp.getBallInfo().get(0).setAngle(Math.PI-mainApp.getBallInfo().get(0).getAngle());
+        		mainApp.getBallInfo().get(0).setX0(mainApp.getBallInfo().get(0).getCurX());
+        		mainApp.getBallInfo().get(0).setY0(mainApp.getBallInfo().get(0).getCurY());
+        		startNanoTime = System.nanoTime();
+        	} 
+        	else {
+	        	// Checks collisions with top and bottom side. 
+	        	if 
+	        	((y <= mainApp.getTable().getyTop()) 
+	        	    || (y >= (mainApp.getTable().getyTop()+mainApp.getTable().getHeight()-mainApp.getBallInfo().get(0).getD())))
+	        	{  
+	        		// Changes angle, changes x0, y0. Doesn't change curX and curY!!! 
+	        		mainApp.getBallInfo().get(0).setAngle(Math.PI*2-mainApp.getBallInfo().get(0).getAngle());
+	        		mainApp.getBallInfo().get(0).setX0(mainApp.getBallInfo().get(0).getCurX());
+	        		mainApp.getBallInfo().get(0).setY0(mainApp.getBallInfo().get(0).getCurY());
+	        		startNanoTime = System.nanoTime();
+	        	}
+	        	// There is no collision on this step.
+	        	else {
+	        		// Changes curX and curY.
+	        		mainApp.getBallInfo().get(0).setCurX(x);
+	        		mainApp.getBallInfo().get(0).setCurY(y);
+	        	}
+        	}
+    	}
+    	  	
+    	public void handle(long currentNanoTime)
+        {
+    		// Clears canvas.
+        	gcBalls.clearRect(0, 0, canvasBalls.getWidth(), canvasBalls.getHeight());
+           
+        	calculateTrack(currentNanoTime);
+        	
+        	drawBall();        	
         }
     }
 }
